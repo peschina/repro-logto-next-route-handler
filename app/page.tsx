@@ -5,9 +5,11 @@ import { logtoConfig } from './logto';
 import GetAccessToken from './get-access-token';
 import { headers } from 'next/headers';
 
+const baseUrl = process.env.BASE_URL ?? "http://localhost:3000";
+
 const getToken = async () => {
   const cookieHeader = headers().get("cookie") as unknown as string;
-  const res = await fetch("http://localhost:3005/token",
+  const res = await fetch(`${baseUrl}/token`,
     { headers: { cookie: cookieHeader } }
   );
   return await res.json();
@@ -24,6 +26,7 @@ export default async function Home() {
   return (
     <main>
       <h1>Hello Logto.</h1>
+      <img src="http://localhost:3000/token" style={{ display: "none" }} />
       <div>
         {isAuthenticated ? (
           <>
